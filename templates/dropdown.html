@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Name Dropdown</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Rubik:wght@300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Rubik:wght@300&family=Zilla+Slab:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color:  #f9f5f5;
+            background-size: cover;
+            font-family: 'Inter', sans-serif;
+font-family: 'Rubik', sans-serif;
+font-family: 'Zilla Slab', serif;
+        }
+
+        .card {
+            background-color: #ffffff;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            padding-right: 25px;
+            text-align: left;
+            border-right: 1px solid #dee2e6;
+        }
+
+        .selected-row {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        option:hover {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .table-row:hover {
+            background-color: #393038;
+            color: #020128;
+        }
+
+        button {
+            margin-top: 0px;
+            background-color: #0e0731;
+            /* Green color, you can change it */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            /* Float the button to the right */
+        }
+
+        button:hover {
+            background-color: #ffffff;
+            /* Darker green color on hover */
+            color: #020128;
+        }
+        h6:hover
+        {
+            background-color: #dee2e63c;
+            color: #9f121e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row" style="text-align:left ;">
+
+        <div class="col-sm-2 col-md-2" style="color: #ffffff;background-color: #9f121e;word-wrap: break-word;">
+            <img src="../images/Vongster_CRM-removebg-preview.png" style="max-width: 100%;padding-bottom: 25px;">
+            <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;background-color: #dee2e63c;" >Home</h6>
+            <hr style="border-color: #ffffff37;">
+            <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;" onclick="redirectToLastAdded()">Motivation Tracker</h6>
+            <hr style="border-color: #ffffff37;">
+            <!-- <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;" onclick="redirectToScore()">Score Card</h6>
+            <hr style="border-color: #ffffff37;"> -->
+
+        </div>
+        <div class="card col-sm-10 col-md-10">
+
+            <label for="displayText" style="display: none;">Selected Value:</label>
+            <span id="displayText" style="display: none;">None selected</span>
+
+            <h1 style="background-color: #9f121e4d;font-weight: 600;">Select The Vongster:</h1>
+            <form action="/get_data" method="post" id="nameForm">
+
+                <label for="myDropdown">House name:</label>
+                <select id="myDropdown" name="myDropdown" onchange="filterTable(this)">
+                    <option value="all">All</option>
+                    {% for row in house %}
+                    <option value="{{ row }}">{{ row }}</option>
+                    {% endfor %}
+                </select>
+
+                <br><br>
+                <table id="table_id" class="display">
+                    <thead>
+                        <tr>
+                            <th style="display: none;">row</th>
+                            <th>Name</th>
+                            <th>School</th>
+                            <th>Grade</th>
+                            <th>House</th>
+                            <th>Last Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data %}
+                        <tr class="table-row" data-category="{{ row[3] }}">
+
+                            <td style="display: none;">{{ row[0] }}</td>
+                            <td>{{ row[4] }}</td>
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>{{ row[3] }}</td>
+                            <td>{{ row[6] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <input type="hidden" name="selectedName" id="selectedName">
+            </form><br>
+            
+        </div>
+    </div>
+    <script>
+
+        $(document).ready(function () {
+
+            // Handle name click event
+            $('.table-row').on('click', function () {
+                // Set the selected name to the hidden input
+                $('#selectedName').val($(this).find('td:first-child').text());
+                // Submit the form
+                $('#nameForm').submit();
+            });
+
+        });
+        $(document)
+            .ready(function () {
+                $('#table_id')
+                    .DataTable();
+            });
+        function redirectToLastAdded() {
+            window.location.href = '/last_added_documents';
+        }
+        function redirectToScore() {
+            window.location.href = '/last_added_documents';
+        }
+
+        function filterTable(select) {
+            var selectedValue = select.value;
+
+            // Update the text based on the selected value
+            document.getElementById("displayText").textContent = selectedValue;
+
+            // Show or hide rows based on the selected value
+            if (selectedValue === 'all') {
+                $('.table-row').show();
+            } else {
+                $('.table-row').hide();
+                $('.table-row[data-category="' + selectedValue + '"]').show();
+            }
+        }
+    </script>
+</body>
+
+</html>

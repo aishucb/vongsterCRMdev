@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+  Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.container {
+ height: 100vh;
+ max-width: 600px;
+ margin: auto;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ padding: 1rem;
+}
+
+.header {
+ margin: 0.25rem 0;
+ font-size: 2.5rem;
+}
+
+p {
+ margin: 0.5rem 0;
+ font-size: 22px;
+}
+
+
+/* animation class and keyframes */
+.overflow-hidden {
+ overflow: hidden;
+}
+
+.drop-in {
+ animation: drop-in 1s ease 200ms backwards;
+}
+
+.drop-in-2 {
+ animation: drop-in 1200ms ease 500ms backwards;
+}
+
+@keyframes drop-in {
+ from {
+  opacity: 0;
+  transform: translateY(-100px);
+ }
+ to {
+  opacity: 1;
+  transform: translate(0px);
+ }
+}
+
+  </style>
+</head><body class="container" style="align-items: center;">
+  <div class="overflow-hidden">
+   <h1 class="header drop-in"><img src="../images/Vongster_CRM-removebg-preview.png" style="max-width: 300px;padding-bottom: 25px;"></h1>
+  </div>
+  <div class="overflow-hidden">
+   <p class="drop-in-2">
+    Loading....
+   </p>
+  </div>
+  
+  <script>
+    function redirect() {
+      window.location.href = '/index'
+    }
+
+    // Event listener to trigger the redirection function after the page has loaded
+    window.addEventListener('load', function() {
+      setTimeout(redirect, 2000);
+    });
+  </script>
+ </body>
+ </html>
