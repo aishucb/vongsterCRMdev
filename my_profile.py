@@ -7,7 +7,7 @@ import json
 from operator import itemgetter
 app = Flask(__name__,static_folder='images')
 CORS(app)
-uri = "mongodb+srv://vongmeetings2:LexW0wMXLOc2PRb5@cluster0.afg1ajm.mongodb.net/?retryWrites=true&w=majority"
+uri = "mongodb+srv://ash:ashiv3377@cluster0.afg1ajm.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(uri)
 db = client.get_database("Vongdata")
 UPLOAD_FOLDER = 'images'  
